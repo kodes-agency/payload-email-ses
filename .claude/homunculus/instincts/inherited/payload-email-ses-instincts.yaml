@@ -1,0 +1,319 @@
+# Instincts generated from https://github.com/kodes-agency/payload-email-ses
+# Generated: 2026-04-13T15:32:11.748Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: payload-email-ses-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: feat, fix
+
+## Evidence
+
+- 2 commits analyzed
+- Detected conventional commit pattern
+- Examples: feat: add optional structured logging to SES adapter, fix: protect email delivery from logger failures and add logging tests
+
+---
+id: payload-email-ses-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Commit Length
+
+## Action
+
+Write moderate-length commit messages (~61 characters)
+
+## Evidence
+
+- Average commit message length: 61 chars
+- Based on 2 commits
+
+---
+id: payload-email-ses-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Naming Files
+
+## Action
+
+Use camelCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: camelCase
+
+---
+id: payload-email-ses-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: payload-email-ses-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: payload-email-ses-test-separate
+trigger: "when writing tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Test Separate
+
+## Action
+
+Place tests in the tests/ or __tests__/ directory, mirroring src structure
+
+## Evidence
+
+- Separate test directory pattern detected
+- Tests live in dedicated test folders
+
+---
+id: payload-email-ses-instinct-file-naming
+trigger: "When creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Instinct File Naming
+
+## Action
+
+Name the file using camelCase
+
+## Evidence
+
+- Pattern in namingConventions.files
+
+---
+id: payload-email-ses-instinct-function-naming
+trigger: "When defining a new function"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Instinct Function Naming
+
+## Action
+
+Name the function using camelCase
+
+## Evidence
+
+- Pattern in namingConventions.functions
+
+---
+id: payload-email-ses-instinct-class-naming
+trigger: "When creating a new class"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Instinct Class Naming
+
+## Action
+
+Name the class using PascalCase
+
+## Evidence
+
+- Pattern in namingConventions.classes
+
+---
+id: payload-email-ses-instinct-constant-naming
+trigger: "When declaring a constant"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Instinct Constant Naming
+
+## Action
+
+Name the constant using SCREAMING_SNAKE_CASE
+
+## Evidence
+
+- Pattern in namingConventions.constants
+
+---
+id: payload-email-ses-instinct-import-style
+trigger: "When importing modules"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Instinct Import Style
+
+## Action
+
+Use relative import paths
+
+## Evidence
+
+- Pattern in importStyle
+
+---
+id: payload-email-ses-instinct-export-style
+trigger: "When exporting from a module"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Instinct Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in exportStyle
+
+---
+id: payload-email-ses-instinct-test-location
+trigger: "When adding or updating tests"
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Instinct Test Location
+
+## Action
+
+Place test files in the separate 'test' folder
+
+## Evidence
+
+- Pattern in folderStructure.testLocation
+- commonFolders includes 'test'
+
+---
+id: payload-email-ses-instinct-commit-format
+trigger: "When writing a commit message"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Instinct Commit Format
+
+## Action
+
+Use the conventional commit format with 'feat' or 'fix' prefixes
+
+## Evidence
+
+- Pattern in commits.type
+- Examples in commits.examples
+
+---
+id: payload-email-ses-instinct-commit-length
+trigger: "When writing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Instinct Commit Length
+
+## Action
+
+Keep the commit message concise, around 60 characters
+
+## Evidence
+
+- Pattern in commits.averageLength
+
+---
+id: payload-email-ses-instinct-error-handling
+trigger: "When handling errors in code"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: kodes-agency/payload-email-ses
+---
+
+# Payload Email Ses Instinct Error Handling
+
+## Action
+
+Use try-catch blocks for error handling
+
+## Evidence
+
+- Pattern in errorHandling.style
+
