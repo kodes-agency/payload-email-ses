@@ -14,6 +14,8 @@ export function sesAdapter(args: SESAdapterArgs): SESEmailAdapter {
     },
   })
 
+  const log = args.logger
+
   return () => ({
     name: 'ses',
     defaultFromAddress: args.defaultFromAddress,
@@ -46,11 +48,26 @@ export function sesAdapter(args: SESAdapterArgs): SESEmailAdapter {
         ...(replyTo ? { ReplyToAddresses: replyTo } : {}),
       })
 
+      log?.info('Sending email via SES', {
+        to: destination.ToAddresses,
+        cc: destination.CcAddresses,
+        bcc: destination.BccAddresses,
+        from: fromAddress,
+        subject: message.subject,
+      })
+
       try {
         const response = await client.send(command)
+        log?.info('Email sent via SES', { messageId: response.MessageId })
         return { messageId: response.MessageId }
       } catch (error) {
         const sesError = error as SESv2ServiceException
+        log?.error('SES email send failed', {
+          errorName: sesError.name,
+          errorMessage: sesError.message,
+          to: destination.ToAddresses,
+          from: fromAddress,
+        })
         throw new Error(`SES email send failed: ${sesError.name} — ${sesError.message}`)
       }
     },
