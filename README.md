@@ -19,104 +19,104 @@ pnpm add @aws-sdk/client-sesv2 payload
 In your `payload.config.ts`:
 
 ```ts
-import { buildConfig } from 'payload'
-import { sesAdapter } from 'payload-email-ses'
+import { buildConfig } from "payload";
+import { sesAdapter } from "payload-email-ses";
 
 export default buildConfig({
   email: sesAdapter({
-    defaultFromAddress: 'noreply@example.com',
-    defaultFromName: 'My App',
-    region: 'eu-west-1',
+    defaultFromAddress: "noreply@example.com",
+    defaultFromName: "My App",
+    region: "eu-west-1",
     credentials: {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
     },
   }),
   // ... rest of your config
-})
+});
 ```
 
 ## Configuration
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `defaultFromAddress` | `string` | Yes | Default sender email address |
-| `defaultFromName` | `string` | Yes | Default sender display name |
-| `region` | `string` | Yes | AWS region for SES (e.g. `eu-west-1`) |
-| `credentials.accessKeyId` | `string` | Yes | AWS access key ID |
-| `credentials.secretAccessKey` | `string` | Yes | AWS secret access key |
-| `logger` | `Logger` | No | Structured logger for email send events |
+| Option                        | Type     | Required | Description                             |
+| ----------------------------- | -------- | -------- | --------------------------------------- |
+| `defaultFromAddress`          | `string` | Yes      | Default sender email address            |
+| `defaultFromName`             | `string` | Yes      | Default sender display name             |
+| `region`                      | `string` | Yes      | AWS region for SES (e.g. `eu-west-1`)   |
+| `credentials.accessKeyId`     | `string` | Yes      | AWS access key ID                       |
+| `credentials.secretAccessKey` | `string` | Yes      | AWS secret access key                   |
+| `logger`                      | `Logger` | No       | Structured logger for email send events |
 
 ## Logging
 
 Pass a `Logger` to get structured logs for email send events. The logger is completely optional — emails are delivered normally when no logger is provided. Logging failures never affect email delivery.
 
 ```ts
-import { pino } from 'pino'
+import { pino } from "pino";
 
 export default buildConfig({
   email: sesAdapter({
-    defaultFromAddress: 'noreply@example.com',
-    defaultFromName: 'My App',
-    region: 'eu-west-1',
+    defaultFromAddress: "noreply@example.com",
+    defaultFromName: "My App",
+    region: "eu-west-1",
     credentials: {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
     },
     logger: pino(),
   }),
-})
+});
 ```
 
 The `Logger` interface matches pino, winston, bunyan, and most Node.js loggers:
 
 ```ts
 interface Logger {
-  info: (msg: string, meta?: Record<string, unknown>) => void
-  error: (msg: string, meta?: Record<string, unknown>) => void
-  warn: (msg: string, meta?: Record<string, unknown>) => void
+  info: (msg: string, meta?: Record<string, unknown>) => void;
+  error: (msg: string, meta?: Record<string, unknown>) => void;
+  warn: (msg: string, meta?: Record<string, unknown>) => void;
 }
 ```
 
 Log events:
 
-| Event | Level | Metadata |
-|-------|-------|----------|
-| Before send | `info` | `to`, `cc`, `bcc`, `from`, `subject` |
-| Send success | `info` | `messageId` |
+| Event        | Level   | Metadata                                  |
+| ------------ | ------- | ----------------------------------------- |
+| Before send  | `info`  | `to`, `cc`, `bcc`, `from`, `subject`      |
+| Send success | `info`  | `messageId`                               |
 | Send failure | `error` | `errorName`, `errorMessage`, `to`, `from` |
 
 ## Sending emails
 
 ```ts
 await req.payload.sendEmail({
-  to: 'user@example.com',
-  subject: 'Welcome',
-  html: '<h1>Hello!</h1>',
-  text: 'Hello!',
-})
+  to: "user@example.com",
+  subject: "Welcome",
+  html: "<h1>Hello!</h1>",
+  text: "Hello!",
+});
 ```
 
 ### Override from address per email
 
 ```ts
 await req.payload.sendEmail({
-  from: 'support@example.com',
-  to: 'user@example.com',
-  subject: 'Support',
-  html: '<p>We got your message.</p>',
-})
+  from: "support@example.com",
+  to: "user@example.com",
+  subject: "Support",
+  html: "<p>We got your message.</p>",
+});
 ```
 
 ### Reply-To
 
 ```ts
 await req.payload.sendEmail({
-  to: 'user@example.com',
-  subject: 'Contact',
-  html: '<p>Reply to this email.</p>',
-  replyTo: 'contact@example.com',
-})
+  to: "user@example.com",
+  subject: "Contact",
+  html: "<p>Reply to this email.</p>",
+  replyTo: "contact@example.com",
+});
 ```
 
 ## AWS IAM permissions
