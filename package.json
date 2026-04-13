@@ -1,6 +1,6 @@
 {
   "name": "payload-email-ses",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AWS SESv2 email adapter for Payload CMS 3.x",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -8,11 +8,19 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
-      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
