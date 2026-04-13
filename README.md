@@ -45,6 +45,46 @@ export default buildConfig({
 | `region` | `string` | Yes | AWS region for SES (e.g. `eu-west-1`) |
 | `credentials.accessKeyId` | `string` | Yes | AWS access key ID |
 | `credentials.secretAccessKey` | `string` | Yes | AWS secret access key |
+| `logger` | `Logger` | No | Structured logger for email send events |
+
+## Logging
+
+Pass a `Logger` to get structured logs for email send events. The logger is completely optional — emails are delivered normally when no logger is provided. Logging failures never affect email delivery.
+
+```ts
+import { pino } from 'pino'
+
+export default buildConfig({
+  email: sesAdapter({
+    defaultFromAddress: 'noreply@example.com',
+    defaultFromName: 'My App',
+    region: 'eu-west-1',
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    },
+    logger: pino(),
+  }),
+})
+```
+
+The `Logger` interface matches pino, winston, bunyan, and most Node.js loggers:
+
+```ts
+interface Logger {
+  info: (msg: string, meta?: Record<string, unknown>) => void
+  error: (msg: string, meta?: Record<string, unknown>) => void
+  warn: (msg: string, meta?: Record<string, unknown>) => void
+}
+```
+
+Log events:
+
+| Event | Level | Metadata |
+|-------|-------|----------|
+| Before send | `info` | `to`, `cc`, `bcc`, `from`, `subject` |
+| Send success | `info` | `messageId` |
+| Send failure | `error` | `errorName`, `errorMessage`, `to`, `from` |
 
 ## Sending emails
 
@@ -104,7 +144,7 @@ The IAM user or role needs at minimum:
 - `mapDestination` — Map to/cc/bcc to SESv2 destination
 - `mapEmailContent` — Map subject/html/text to SESv2 content
 
-Type exports: `SESAdapterArgs`, `SESEmailResponse`, `SESEmailAdapter`
+Type exports: `SESAdapterArgs`, `SESEmailResponse`, `SESEmailAdapter`, `Logger`
 
 ## License
 

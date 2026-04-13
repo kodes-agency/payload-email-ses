@@ -5,6 +5,19 @@ import type { SendEmailOptions } from 'payload'
 import { mapDestination, mapEmailContent, resolveFromAddress } from './helpers'
 import type { SESAdapterArgs, SESEmailResponse, SESEmailAdapter } from './types'
 
+function safeLog(
+  log: SESAdapterArgs['logger'],
+  level: 'info' | 'error',
+  msg: string,
+  meta?: Record<string, unknown>,
+) {
+  try {
+    log?.[level](msg, meta)
+  } catch {
+    // Logging failures must never affect email delivery
+  }
+}
+
 export function sesAdapter(args: SESAdapterArgs): SESEmailAdapter {
   const client = new SESv2Client({
     region: args.region,
@@ -48,7 +61,7 @@ export function sesAdapter(args: SESAdapterArgs): SESEmailAdapter {
         ...(replyTo ? { ReplyToAddresses: replyTo } : {}),
       })
 
-      log?.info('Sending email via SES', {
+      safeLog(log, 'info', 'Sending email via SES', {
         to: destination.ToAddresses,
         cc: destination.CcAddresses,
         bcc: destination.BccAddresses,
@@ -58,11 +71,11 @@ export function sesAdapter(args: SESAdapterArgs): SESEmailAdapter {
 
       try {
         const response = await client.send(command)
-        log?.info('Email sent via SES', { messageId: response.MessageId })
+        safeLog(log, 'info', 'Email sent via SES', { messageId: response.MessageId })
         return { messageId: response.MessageId }
       } catch (error) {
         const sesError = error as SESv2ServiceException
-        log?.error('SES email send failed', {
+        safeLog(log, 'error', 'SES email send failed', {
           errorName: sesError.name,
           errorMessage: sesError.message,
           to: destination.ToAddresses,
